@@ -37,14 +37,29 @@
         <div class="header-nav">
           <nav class="global-nav">
 
-            <?php
+            <?php /*
             wp_nav_menu(
               [
                 'theme_location' => 'place_global',
                 'container' => false,
               ]
             );
-            ?>
+            */ ?>
+
+          <?php
+          $menu_name = 'place_global'; // メニュー名
+          $locations = get_nav_menu_locations(); // メニューを取得
+          $menu = wp_get_nav_menu_object($locations[$menu_name]); // ナビゲーションの情報を取得
+          $menu_items = wp_get_nav_menu_items($menu->term_id); // term_idを指定して取得
+          ?>
+
+            <ul class="menu">
+            <?php foreach ($menu_items as $item) : ?>
+              <li class="menu-item">
+                <a class="nav-link active" href="<?php echo esc_attr($item->url); ?>"><?php echo esc_html($item->title); ?></a>
+              </li>
+              <?php endforeach; ?>
+            </ul>
 
           </nav>
           <form class="search-form" role="search" method="get" action="">
