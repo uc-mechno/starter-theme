@@ -24,15 +24,26 @@
 
       <nav class="footer-nav">
 
-        <?php
+        <?php /* wp_get_nav_menu_itemsの使用に伴い削除
         wp_nav_menu(
           [
             'theme_location' => 'place_footer',
             'container' => false,
           ]
         );
-        ?>
+      */ ?>
 
+      <?php var_dump(get_eyecatch_with_default('large')); ?>
+
+        <ul class="menu">
+          <?php
+          $items = get_nav_menu('place_global');
+          foreach ($items as $item) : ?>
+            <li class="menu-item">
+              <a class="nav-link" href="<?php echo esc_attr($item->url); ?>"><?php echo esc_html($item->title); ?></a>
+            </li>
+          <?php endforeach; ?>
+        </ul>
       </nav>
     </div>
   </div>
