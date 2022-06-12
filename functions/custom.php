@@ -108,3 +108,22 @@ function get_nav_menu($name)
 
   return $menu_items;
 }
+
+/**
+ * 各テンプレートごとのメイン画像を表示
+ * ************************************************************************
+ * @see https://ekuriyu.com/archives/wp-global-post/
+ * TODO：グローバル変数をあまりつかいたくない
+ */
+function get_main_image()
+{
+  global $post;
+
+  if (is_page()) :
+    return get_the_post_thumbnail($post->ID, 'detail');
+  elseif (is_category('news') || is_singular('post')) :
+    return '<img src="' . GET_PATH() . '/bg-page-news.jpg" />';
+  else:
+    return '<img src="' . GET_PATH() . '/bg-page-dummy.png" />';
+  endif;
+}

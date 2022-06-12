@@ -33,11 +33,9 @@
         );
       */ ?>
 
-      <?php var_dump(get_eyecatch_with_default('large')); ?>
-
         <ul class="menu">
           <?php
-          $items = get_nav_menu('place_global');
+          $items = get_nav_menu('place_footer');
           foreach ($items as $item) : ?>
             <li class="menu-item">
               <a class="nav-link" href="<?php echo esc_attr($item->url); ?>"><?php echo esc_html($item->title); ?></a>

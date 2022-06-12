@@ -34,10 +34,12 @@ function my_enqueue_script()
 
   wp_enqueue_script(
     'bundle_js',
-    GET_PATH('js') . '/assets/js/bundle.js',
+    GET_PATH('js') . '/bundle.js',
     ['jquery'],
     filemtime(get_theme_file_path('/assets/js/bundle.js')),
   );
+
+  // TODO：filemtimeのパス用のグローバル変数作成
 
   // その他のスクリプトを読み込む
   // wp_enqueue_script(
