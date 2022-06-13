@@ -30,10 +30,18 @@ function get_main_title()
  * 子ページを取得する
  * ************************************************************************
  *
- *  <?php $common_pages = get_child_pages();
- *  if ($common_pages->have_posts()) :
- *    while ($common_pages->have_posts()) : $common_pages->the_post();
- *      get_template_part('template-parts/content', 'common');
+ * @param int $numberに記事数を指定
+ * 初期値：-1
+ * @param int $specified_idに現在表示している記事のIDを指定
+ * 初期値：null
+ * @return object $child_pagesにWP_Queryを格納
+ *
+ *  <?php $sample_pages = get_child_pages(第一引数, 第二引数);
+ *  if ($sample_pages->have_posts()) :
+ *    while ($sample_pages->have_posts()) : $sample_pages->the_post();
+ *
+ *      ここに回す記事
+ *
  *    endwhile;
  *    wp_reset_postdata();
  *  endif; ?>
@@ -67,7 +75,7 @@ function get_child_pages($number = -1, $specified_id = null)
  * 初期値：'/img/post-bg.jpg'
  * @return array $imgにterm_idを指定して取得して格納
  *
- * <?php $eyecatch = get_eyecatch_with_default(); ?>
+ * <?php $eyecatch = get_eyecatch_with_default(第一引数, 第二引数); ?>
  * <header style="background-image: url('<?php echo $eyecatch[0]; ?>')"></header>
  *
  */
@@ -123,7 +131,7 @@ function get_main_image()
     return get_the_post_thumbnail($post->ID, 'detail');
   elseif (is_category('news') || is_singular('post')) :
     return '<img src="' . GET_PATH() . '/bg-page-news.jpg" />';
-  else:
+  else :
     return '<img src="' . GET_PATH() . '/bg-page-dummy.png" />';
   endif;
 }
