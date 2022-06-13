@@ -1,27 +1,29 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html <?php language_attributes(); ?>>
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="<?php bloginfo('charset'); ?>">
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="keywords" content="共通キーワード" />
   <meta name="description" content="><?php bloginfo('description'); ?>" />
   <title><?php bloginfo('name'); ?></title>
   <link rel="shortcut icon" href="<?php echo GET_PATH(); ?>/common/favicon.ico" />
+
+  <?php
+  /* functions.phpで読み込み
   <link href="https://fonts.googleapis.com/earlyaccess/notosansjapanese.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Vollkorn:400i" rel="stylesheet" />
-
-  <?php /* TODO：functions.phpに移動
   <link rel="stylesheet" type="text/css" href="<?php echo GET_PATH('css'); >/styles.css" />
   <script type="text/javascript" src="<?php echo GET_PATH('js'); >/jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="<?php echo GET_PATH('js'); >/bundle.js"></script>
-*/ ?>
+  */
+  ?>
 
   <?php wp_head(); ?>
-
 </head>
 
 <body <?php body_class(); ?>>
+  <?php wp_body_open(); ?>
   <div class="container">
     <header id="header">
       <div class="header-inner">
@@ -37,14 +39,23 @@
         <div class="header-nav">
           <nav class="global-nav">
 
-            <?php
+            <?php /* wp_get_nav_menu_itemsの使用に伴い削除
             wp_nav_menu(
               [
                 'theme_location' => 'place_global',
                 'container' => false,
               ]
             );
-            ?>
+          */  ?>
+
+            <ul class="menu">
+              <?php $items = get_nav_menu('place_global');
+              foreach ($items as $item) : ?>
+                <li class="menu-item">
+                  <a class="nav-link" href="<?php echo esc_attr($item->url); ?>"><?php echo esc_html($item->title); ?></a>
+                </li>
+              <?php endforeach; ?>
+            </ul>
 
           </nav>
           <form class="search-form" role="search" method="get" action="">
@@ -80,7 +91,7 @@
           <main>
             <div class="page-contents">
               <div class="page-head">
-                <img src="<?php echo GET_PATH(); ?>/bg-page-dummy.png" alt="" />
+                <?php echo get_main_image(); ?>
                 <div class="wrapper">
                   <span class="page-title-en"></span>
                   <h2 class="page-title"><?php echo esc_html(get_main_title()); ?></h2>

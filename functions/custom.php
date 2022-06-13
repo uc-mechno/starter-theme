@@ -29,6 +29,15 @@ function get_main_title()
 /**
  * 子ページを取得する
  * ************************************************************************
+ *
+ *  <?php $common_pages = get_child_pages();
+ *  if ($common_pages->have_posts()) :
+ *    while ($common_pages->have_posts()) : $common_pages->the_post();
+ *      get_template_part('template-parts/content', 'common');
+ *    endwhile;
+ *    wp_reset_postdata();
+ *  endif; ?>
+ *
  */
 function get_child_pages($number = -1, $specified_id = null)
 {
@@ -46,4 +55,75 @@ function get_child_pages($number = -1, $specified_id = null)
   ];
   $child_pages = new WP_Query($args);
   return $child_pages;
+}
+
+/**
+ * アイキャッチ画像がなければ、ダミー画像を取得する
+ * ************************************************************************
+ *
+ * @param string $sizeに画像のサイズを指定
+ * 初期値：thumbnail
+ * @param string $pathにダミー画像のパスを指定
+ * 初期値：'/img/post-bg.jpg'
+ * @return array $imgにterm_idを指定して取得して格納
+ *
+ * <?php $eyecatch = get_eyecatch_with_default(); ?>
+ * <header style="background-image: url('<?php echo $eyecatch[0]; ?>')"></header>
+ *
+ */
+function get_eyecatch_with_default($size = 'thumbnail', $path = '/img/post-bg.jpg')
+{
+  if (has_post_thumbnail()) :
+    $id  = get_post_thumbnail_id();
+    $img = wp_get_attachment_image_src($id, $size);
+  else :
+    $img = array(get_template_directory_uri() . $path);
+  endif;
+
+  return $img;
+}
+
+/**
+ * カスタムメニューを柔軟に使用する
+ * ************************************************************************
+ *
+ * @param string $nameに該当するメニュー名を指定する
+ * @return object $menu_itemsにterm_idを指定して取得して格納
+ *
+ * <?php
+ * $items = get_nav_menu('place_global');
+ * foreach ($items as $item) : ?>
+ *   <li class="menu-item">
+ *     <a class="nav-link" href="<?php echo esc_attr($item->url); ?>"><?php echo esc_html ($item->title); ?></a>
+ *   </li>
+ *<?php endforeach; ?>
+ *
+ */
+function get_nav_menu($name)
+{
+  $menu_name = $name; // メニュー名
+  $locations = get_nav_menu_locations(); // メニューを取得
+  $menu = wp_get_nav_menu_object($locations[$menu_name]); // ナビゲーションの情報を取得
+  $menu_items = wp_get_nav_menu_items($menu->term_id); // term_idを指定して取得
+
+  return $menu_items;
+}
+
+/**
+ * 各テンプレートごとのメイン画像を表示
+ * ************************************************************************
+ * @see https://ekuriyu.com/archives/wp-global-post/
+ * TODO：グローバル変数をあまりつかいたくない
+ */
+function get_main_image()
+{
+  global $post;
+
+  if (is_page()) :
+    return get_the_post_thumbnail($post->ID, 'detail');
+  elseif (is_category('news') || is_singular('post')) :
+    return '<img src="' . GET_PATH() . '/bg-page-news.jpg" />';
+  else:
+    return '<img src="' . GET_PATH() . '/bg-page-dummy.png" />';
+  endif;
 }
