@@ -66,6 +66,28 @@ function get_child_pages($number = -1, $specified_id = null)
 }
 
 /**
+ * 特定の記事を抽出する関数
+ * ************************************************************************
+ *
+ */
+function get_specific_posts($post_type, $taxonomy = null, $term = null, $number = -1)
+{
+  $args = [
+    'post_type' => $post_type,
+    'tax_query' => [
+      [
+        'taxonomy' => $taxonomy,
+        'field' => 'slug',
+        'terms' => $term,
+      ],
+    ],
+    'posts_per_page' => $number,
+  ];
+  $specific_posts = new WP_Query($args);
+  return $specific_posts;
+}
+
+/**
  * アイキャッチ画像がなければ、ダミー画像を取得する
  * ************************************************************************
  *
