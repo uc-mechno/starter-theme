@@ -62,8 +62,8 @@
     ?>
 
     <span class="section-title-en">Regional Contribution</span>
-    <h2 class="section-title">地域貢献活動</h2>
-    <p class="section-lead">人と地域を結ぶ活動を行っております</p>
+    <h2 class="section-title"><?php the_title(); ?></h2>
+    <p class="section-lead"><?php echo get_the_excerpt(); ?></p>
 
     <?php wp_reset_postdata(); ?>
 
