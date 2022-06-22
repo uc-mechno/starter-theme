@@ -32,8 +32,6 @@
         if (function_exists('wp_pagenavi')) {
           wp_pagenavi();
         }
-        ?>
-        <?php
         if (function_exists('pagination')) {
           pagination($wp_query->max_num_pages, get_query_var('paged'));
         }
