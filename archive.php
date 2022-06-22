@@ -17,6 +17,28 @@
           ?>
 
         </div>
+
+        <div class="pager">
+          <ul class="pagerList">
+            <?php
+            if (function_exists('page_navi')) {
+              page_navi();
+            }
+            ?>
+          </ul>
+        </div>
+
+        <?php
+        if (function_exists('wp_pagenavi')) {
+          wp_pagenavi();
+        }
+        ?>
+        <?php
+        if (function_exists('pagination')) {
+          pagination($wp_query->max_num_pages, get_query_var('paged'));
+        }
+        ?>
+
       </div>
     </div>
   </div>
