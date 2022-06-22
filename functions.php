@@ -35,6 +35,7 @@ get_template_part('functions/category'); // カテゴリーの設定
 get_template_part('functions/wp-head'); // wp-headの設定
 get_template_part('functions/wp_body_open'); // wp_body_openの設定
 get_template_part('functions/breadcrumb'); // パンくずの設定
+get_template_part('functions/pagination'); // ページネーションの設定
 get_template_part('functions/display'); // 抜粋の設定
 get_template_part('functions/search'); // 検索の設定
 get_template_part('functions/plugins/contactform7'); // contactform7の設定
