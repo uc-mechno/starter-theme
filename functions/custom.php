@@ -91,6 +91,8 @@ function get_specific_posts($post_type, $taxonomy = null, $term = null, $number 
   return $specific_posts;
 }
 
+// TODO：アイキャッチ関係の関数はまだ色々できそう
+
 /**
  * アイキャッチ画像がなければ、ダミー画像を取得する
  * ************************************************************************
@@ -115,6 +117,30 @@ function get_eyecatch_with_default($size = 'thumbnail', $path = '/img/post-bg.jp
   endif;
 
   return $img;
+}
+
+/**
+ * アイキャッチ画像がなければ、ダミー画像を取得する
+ * ************************************************************************
+ *
+ * @param string $idに投稿IDを指定
+ * @param string $sizeに画像のサイズを指定
+ * 初期値：thumbnail
+ * @return array $imageにget_the_post_thumbnail()を指定して取得して格納
+ *
+ * <?php get_eyecatch_default($post->ID, 'search'); ?>
+ *
+ */
+function get_eyecatch_default($id, $size = 'thumbnail')
+{
+  $image = get_the_post_thumbnail($id,  $size);
+  if ($image) :
+    echo $image;
+  else :
+    echo '<img src="' . get_template_directory_uri() . '/assets/images/img-noImage.png">';
+  endif;
+
+  return $image;
 }
 
 /**

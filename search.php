@@ -26,14 +26,18 @@
                 <div class="item-wrapper">
                   <div class="image">
 
-                    <?php
+                    <?php /*
                     $image = get_the_post_thumbnail($post->ID, 'search');
                     if ($image) :
                       echo $image;
                     else :
                       echo '<img src="' . get_template_directory_uri() . '/assets/images/img-noImage.png">';
                     endif;
-                    ?>
+                   */ ?>
+
+                   <?php get_eyecatch_default($post->ID, 'search'); ?>
+
+                   <?php var_dump(get_eyecatch_default($post->ID, 'search')); ?>
 
                   </div>
                   <dl>
