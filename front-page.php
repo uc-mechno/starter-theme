@@ -12,7 +12,7 @@
 
     <span class="section-title-en">Shop Information</span>
     <h2 class="section-title"><?php the_title(); ?></h2>
-    <p class="section-lead"><?php echo nl2br(esc_html(get_the_excerpt())); ?></p>
+    <p class="section-lead"><?php echo get_the_excerpt(); ?></p>
 
     <?php wp_reset_postdata(); ?>
 
@@ -63,7 +63,7 @@
 
     <span class="section-title-en">Regional Contribution</span>
     <h2 class="section-title"><?php the_title(); ?></h2>
-    <p class="section-lead"><?php echo nl2br(esc_html(get_the_excerpt())); ?></p>
+    <p class="section-lead"><?php echo get_the_excerpt(); ?></p>
 
     <?php wp_reset_postdata(); ?>
 
@@ -81,7 +81,7 @@
                 <div class="card-image"><?php the_post_thumbnail('front-contribution'); ?></div>
                 <div class="card-body">
                   <p class="title"><?php the_title(); ?></p>
-                  <p class="excerpt"><?php echo nl2br(esc_html(get_the_excerpt())); ?></p>
+                  <p class="excerpt"><?php echo get_the_excerpt(); ?></p>
                   <div class="buttonBox">
                     <button type="button" class="seeDetail">MORE</button>
                   </div>
@@ -127,7 +127,7 @@
             <a class="detail-link" href="<?php the_permalink(); ?>">
               <time class="time"><?php the_time('Y.m.d'); ?></time>
               <p class="title"><?php the_title(); ?></p>
-              <p class="news-text"><?php echo nl2br(esc_html(get_the_excerpt())); ?></p>
+              <p class="news-text"><?php echo get_the_excerpt(); ?></p>
             </a>
           </li>
 
@@ -157,7 +157,7 @@
 
     <span class="section-title-en">Enterprise Information</span>
     <h2 class="section-title"><?php the_title(); ?></h2>
-    <p class="section-lead"><?php echo nl2br(esc_html(get_the_excerpt())); ?></p>
+    <p class="section-lead"><?php echo get_the_excerpt(); ?></p>
     <div class="section-buttons">
 
       <button type="button" class="button button-ghost" onclick="javascript:location.href = '<?php echo esc_url(home_url('company')); ?>';">
