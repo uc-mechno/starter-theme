@@ -10,5 +10,3 @@
     </div>
   </a>
 </article>
-
-<?php var_dump($term); ?>
