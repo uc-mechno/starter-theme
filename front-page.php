@@ -70,7 +70,7 @@
     <div class="articles">
 
       <?php
-      $contribution_pages = get_child_pages(3, $contribution_obj->ID);
+      $contribution_pages = get_specific_posts( 'daily_contribution', 'event', '', 3 );
       if ($contribution_pages->have_posts()) :
         while ($contribution_pages->have_posts()) : $contribution_pages->the_post();
       ?>

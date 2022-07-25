@@ -11,6 +11,35 @@
  */
 
 /**
+ * ユーザー権限毎に body にclassをふる
+ * ************************************************************************
+ */
+function add_user_role_class($admin_body_class)
+{
+  global $current_user;
+  if (!$admin_body_class) {
+    $admin_body_class .= ' ';
+  }
+  $admin_body_class .= ' role-' . urlencode($current_user->roles[0]);
+  return $admin_body_class;
+}
+add_filter('admin_body_class', 'add_user_role_class');
+
+/**
+ * スラッグ名のクラスを自動で出力
+ * ************************************************************************
+ */
+function add_class_page_slug($classes)
+{
+  if (is_page()) {
+    $page = get_post(get_the_ID());
+    $classes[] = $page->post_name;
+  }
+  return $classes;
+}
+add_filter('body_class', 'add_class_page_slug');
+
+/**
  * メイン画像上にテンプレートごとの文字列を表示
  * ************************************************************************
  */
@@ -21,17 +50,21 @@ function get_main_title()
     return $category_obj[0]->name;
   elseif (is_page()) :
     return get_the_title();
-  elseif (is_category()) :
+  elseif (is_category() || is_tax()) :
     return single_cat_title();
   elseif (is_search()) :
     return ' サイト内検索結果';
   elseif (is_404()) :
     return ' ページが見つかりません';
+  elseif (is_singular('daily_contribution')) :
+    global $post;
+    $term_obj = get_the_terms($post->ID, 'event');
+    return $term_obj[0]->name;
   endif;
 }
 
 /**
- * 子ページを取得する
+ * 子ページを出力する関数
  * ************************************************************************
  *
  * @param int $numberに記事数を指定
@@ -70,12 +103,36 @@ function get_child_pages($number = -1, $specified_id = null)
 }
 
 /**
- * 特定の記事を抽出する関数
+ * 特定の記事を出力する関数
  * ************************************************************************
+ *
+ * @param int $post_typeに投稿タイプを指定
+ * @param int $taxonomyにタクソノミー名を指定
+ * 初期値：null
+ * @param int $termにターム名を指定
+ * 初期値：null
+ * @param int $numberに記事数を指定
+ * 初期値：-1
+ * @return object $specific_postsにWP_Queryを格納
+ *
+ *  <?php $term = get_specific_posts(第一引数, 第二引数, 第三引数, 第四引数);
+ *  if ($term->have_posts()) :
+ *    while ($term->have_posts()) : $term->the_post();
+ *
+ *      ここに回す記事
+ *
+ *    endwhile;
+ *    wp_reset_postdata();
+ *  endif; ?>
  *
  */
 function get_specific_posts($post_type, $taxonomy = null, $term = null, $number = -1)
 {
+  if (!$term) :
+    $terms_obj = get_terms('event');
+    $term = wp_list_pluck($terms_obj, 'slug');
+  endif;
+
   $args = [
     'post_type' => $post_type,
     'tax_query' => [
