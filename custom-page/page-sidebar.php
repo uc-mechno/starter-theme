@@ -1,6 +1,7 @@
 <?php
 /*
 Template Name: サイドバーあり
+Template Post Type: page
 */
 get_header(); ?>
 <div class="page-inner two-column">

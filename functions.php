@@ -5,6 +5,12 @@
  * functions.phpを分割
  * @see https://meshikui.com/2018/08/24/753/
  *
+ * ドキュメント
+ * @link https://ja.wordpress.org/team/handbook/coding-standards/inline-documentation-standards/php/
+ *
+ * テーマの作成
+ * @link https://wpdocs.osdn.jp/%E3%83%86%E3%83%BC%E3%83%9E%E3%81%AE%E4%BD%9C%E6%88%90
+ *
  * ************************************************************************
  */
 

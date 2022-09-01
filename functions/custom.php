@@ -207,6 +207,12 @@ function get_eyecatch_default($id, $size = 'thumbnail')
  * @param string $nameに該当するメニュー名を指定する
  * @return object $menu_itemsにterm_idを指定して取得して格納
  *
+ * @see https://connect-solution.net/jp/2020/09/28/wordpress%E3%80%80get_nav_menu%E3%81%AB%E5%AF%BE%E3%81%99%E3%82%8B%E8%80%83%E5%AF%9F/
+ *
+ * @link https://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9/wp_get_nav_menu_items
+ * @link https://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9/wp_get_nav_menu_items
+ * @link https://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9/wp_get_nav_menu_items
+ *
  * <?php
  * $items = get_nav_menu('place_global');
  * foreach ($items as $item) : ?>
@@ -218,10 +224,10 @@ function get_eyecatch_default($id, $size = 'thumbnail')
  */
 function get_nav_menu($name)
 {
-  $menu_name = $name; // メニュー名
-  $locations = get_nav_menu_locations(); // メニューを取得
-  $menu = wp_get_nav_menu_object($locations[$menu_name]); // ナビゲーションの情報を取得
-  $menu_items = wp_get_nav_menu_items($menu->term_id); // term_idを指定して取得
+  $menu_name  = $name;                                          // メニュー名
+  $locations  = get_nav_menu_locations();                       // メニューを取得
+  $menu       = wp_get_nav_menu_object($locations[$menu_name]); // ナビゲーションの情報を取得
+  $menu_items = wp_get_nav_menu_items($menu->term_id);          // term_idを指定して取得
 
   return $menu_items;
 }
@@ -229,20 +235,62 @@ function get_nav_menu($name)
 /**
  * 各テンプレートごとのメイン画像を表示
  * ************************************************************************
- * @see https://ekuriyu.com/archives/wp-global-post/
- * TODO：グローバル変数をあまりつかいたくない
+ *
+ * @link https://wpdocs.osdn.jp/%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3%82%BF%E3%82%B0/wp_get_attachment_image
+ *
+ * <?php echo get_main_image(); ?>
+ *
  */
 function get_main_image()
 {
-  global $post;
-
-  if (is_page()) :
-    return get_the_post_thumbnail($post->ID, 'detail');
+  if (is_page() || is_singular('daily_contribution')) :
+    $attachment_id = get_field('main_image');
+    if (is_front_page()) :
+      return wp_get_attachment_image($attachment_id, 'top');
+    else :
+      return wp_get_attachment_image($attachment_id, 'detail');
+    endif;
   elseif (is_category('news') || is_singular('post')) :
     return '<img src="' . GET_PATH() . '/bg-page-news.jpg">';
   elseif (is_search() || is_404()) :
     return '<img src="' . GET_PATH() . '/bg-page-search.jpg">';
+  elseif (is_tax('event')) :
+    $term_obj = get_queried_object();
+    $image_id = get_field('event_image', $term_obj->taxonomy . '_' . $term_obj->term_id);
+    return wp_get_attachment_image($image_id, 'detail');
   else :
     return '<img src="' . GET_PATH() . '/bg-page-dummy.png">';
+  endif;
+}
+
+/**
+ * メイン画像上にテンプレートごとの英語タイトルを表示
+ * ************************************************************************
+ *
+ * @link https://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9/get_queried_object
+ *
+ * <?php echo get_main_en_title(); ?>
+ *
+ */
+function get_main_en_title()
+{
+  if (is_category()) :
+    $term_obj = get_queried_object();
+    $english_title = get_field('english_title', $term_obj->taxonomy . '_' . $term_obj->term_id);
+    return $english_title;
+  elseif (is_singular('post')) :
+    $term_obj = get_the_category();
+    $english_title = get_field('english_title', $term_obj[0]->taxonomy . '_' . $term_obj[0]->term_id);
+    return $english_title;
+  elseif (is_page() || is_singular('daily_contribution')) :
+    return get_field('english_title');
+  elseif (is_search()) :
+    return 'Search Result';
+  elseif (is_404()) :
+    return '404 Not Found';
+  elseif (is_tax()) :
+    $term_obj = get_queried_object();
+    $english_title = get_field('english_title', $term_obj->taxonomy . '_' . $term_obj->term_id);
+    return $english_title;
   endif;
 }

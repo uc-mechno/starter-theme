@@ -10,7 +10,7 @@
     $shop_title = get_the_title();
     ?>
 
-    <span class="section-title-en">Shop Information</span>
+    <span class="section-title-en"><?php the_field('english_title'); ?></span>
     <h2 class="section-title"><?php the_title(); ?></h2>
     <p class="section-lead"><?php echo get_the_excerpt(); ?></p>
 
@@ -29,7 +29,7 @@
               <div class="shop-image"><?php the_post_thumbnail('common'); ?></div>
               <div class="shop-body">
                 <p class="name"><?php the_title(); ?></p>
-                <p class="location"></p>
+                <p class="location"><?php the_field('location'); ?></p>
                 <div class="buttonBox">
                   <button type="button" class="seeDetail">MORE</button>
                 </div>
@@ -61,7 +61,7 @@
     $contribution_title = get_the_title();
     ?>
 
-    <span class="section-title-en">Regional Contribution</span>
+    <span class="section-title-en"><?php the_field('english_title'); ?></span>
     <h2 class="section-title"><?php the_title(); ?></h2>
     <p class="section-lead"><?php echo get_the_excerpt(); ?></p>
 
@@ -70,7 +70,7 @@
     <div class="articles">
 
       <?php
-      $contribution_pages = get_specific_posts( 'daily_contribution', 'event', '', 3 );
+      $contribution_pages = get_specific_posts('daily_contribution', 'event', '', 3);
       if ($contribution_pages->have_posts()) :
         while ($contribution_pages->have_posts()) : $contribution_pages->the_post();
       ?>
@@ -111,7 +111,7 @@
 
     <?php $term_obj = get_term_by('slug', 'news', 'category'); ?>
 
-    <span class="section-title-en">News Release</span>
+    <span class="section-title-en"><?php the_field('english_title', $term_obj->taxonomy . '_' . $term_obj->term_id); ?></span>
     <h2 class="section-title"><?php echo esc_html($term_obj->name); ?></h2>
     <p class="section-lead"><?php echo esc_html($term_obj->description); ?></p>
 
@@ -155,7 +155,7 @@
     setup_postdata($post);
     ?>
 
-    <span class="section-title-en">Enterprise Information</span>
+    <span class="section-title-en"><?php the_field('english_title'); ?></span>
     <h2 class="section-title"><?php the_title(); ?></h2>
     <p class="section-lead"><?php echo get_the_excerpt(); ?></p>
     <div class="section-buttons">
