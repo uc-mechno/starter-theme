@@ -7,13 +7,14 @@ get_header();
 <div class="page-inner full-width">
   <div class="page-main" id="pg-shopDetail">
     <div class="lead-inner">
-      <?php
-      if (have_posts()) :
+
+      <?php if (have_posts()) :
         while (have_posts()) : the_post();
           the_content();
         endwhile;
       endif;
       ?>
+
       <div class="bg-shop"></div>
     </div>
     <div class="shopList-Container">

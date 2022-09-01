@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ************************************************************************
  *
@@ -15,9 +16,9 @@
  * ************************************************************************
  */
 $WP_ROOT_PATH = get_stylesheet_directory_uri();
-$WP_IMG_PATH = esc_html($WP_ROOT_PATH . '/assets/images'); // 画像
-$WP_CSS_PATH = esc_html($WP_ROOT_PATH . '/assets/css'); // style
-$WP_JS_PATH = esc_html($WP_ROOT_PATH . '/assets/js'); // script
+$WP_IMG_PATH  = esc_html($WP_ROOT_PATH . '/assets/images'); // 画像
+$WP_CSS_PATH  = esc_html($WP_ROOT_PATH . '/assets/css');    // style
+$WP_JS_PATH   = esc_html($WP_ROOT_PATH . '/assets/js');     // script
 function GET_PATH(string $_type = 'img')
 {
   global $WP_IMG_PATH;
