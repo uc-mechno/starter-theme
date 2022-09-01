@@ -207,6 +207,12 @@ function get_eyecatch_default($id, $size = 'thumbnail')
  * @param string $nameに該当するメニュー名を指定する
  * @return object $menu_itemsにterm_idを指定して取得して格納
  *
+ * @see https://connect-solution.net/jp/2020/09/28/wordpress%E3%80%80get_nav_menu%E3%81%AB%E5%AF%BE%E3%81%99%E3%82%8B%E8%80%83%E5%AF%9F/
+ *
+ * @link https://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9/wp_get_nav_menu_items
+ * @link https://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9/wp_get_nav_menu_items
+ * @link https://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9/wp_get_nav_menu_items
+ *
  * <?php
  * $items = get_nav_menu('place_global');
  * foreach ($items as $item) : ?>
@@ -218,10 +224,10 @@ function get_eyecatch_default($id, $size = 'thumbnail')
  */
 function get_nav_menu($name)
 {
-  $menu_name = $name; // メニュー名
-  $locations = get_nav_menu_locations(); // メニューを取得
-  $menu = wp_get_nav_menu_object($locations[$menu_name]); // ナビゲーションの情報を取得
-  $menu_items = wp_get_nav_menu_items($menu->term_id); // term_idを指定して取得
+  $menu_name  = $name;                                          // メニュー名
+  $locations  = get_nav_menu_locations();                       // メニューを取得
+  $menu       = wp_get_nav_menu_object($locations[$menu_name]); // ナビゲーションの情報を取得
+  $menu_items = wp_get_nav_menu_items($menu->term_id);          // term_idを指定して取得
 
   return $menu_items;
 }
