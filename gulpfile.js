@@ -13,9 +13,9 @@ const buildServer = (done) => {
     // files: ["**/*"],
     // server: { baseDir: "./" },
     // 動的サイト
-    proxy: "http://pacificmall.local/",
+    proxy: "pacificmall.local",
     browser: "Google Chrome",
-    port: 8080,
+    // port: 8080, // TODO：表示されないためコメントアウト
     notify: true,
     open: false,
     watchOptions: { debounceDelay: 1000 },
