@@ -229,15 +229,21 @@ function get_nav_menu($name)
 /**
  * 各テンプレートごとのメイン画像を表示
  * ************************************************************************
- * @see https://ekuriyu.com/archives/wp-global-post/
- * TODO：グローバル変数をあまりつかいたくない
+ *
+ * @link https://wpdocs.osdn.jp/%E3%83%86%E3%83%B3%E3%83%97%E3%83%AC%E3%83%BC%E3%83%88%E3%82%BF%E3%82%B0/wp_get_attachment_image
+ *
+ * <?php echo get_main_image(); ?>
+ *
  */
 function get_main_image()
 {
-  global $post;
-
-  if (is_page()) :
-    return get_the_post_thumbnail($post->ID, 'detail');
+  if (is_page() || is_singular('daily_contribution')) :
+    $attachment_id = get_field('main_image');
+    if (is_front_page()) :
+      return wp_get_attachment_image($attachment_id, 'top');
+    else :
+      return wp_get_attachment_image($attachment_id, 'detail');
+    endif;
   elseif (is_category('news') || is_singular('post')) :
     return '<img src="' . GET_PATH() . '/bg-page-news.jpg">';
   elseif (is_search() || is_404()) :
