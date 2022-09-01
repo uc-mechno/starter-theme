@@ -250,3 +250,35 @@ function get_main_image()
     return '<img src="' . GET_PATH() . '/bg-page-dummy.png">';
   endif;
 }
+
+/**
+ * メイン画像上にテンプレートごとの英語タイトルを表示
+ * ************************************************************************
+ *
+ * @link https://wpdocs.osdn.jp/%E9%96%A2%E6%95%B0%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9/get_queried_object
+ *
+ * <?php echo get_main_en_title(); ?>
+ *
+ */
+function get_main_en_title()
+{
+  if (is_category()) :
+    $term_obj = get_queried_object();
+    $english_title = get_field('english_title', $term_obj->taxonomy . '_' . $term_obj->term_id);
+    return $english_title;
+  elseif (is_singular('post')) :
+    $term_obj = get_the_category();
+    $english_title = get_field('english_title', $term_obj[0]->taxonomy . '_' . $term_obj[0]->term_id);
+    return $english_title;
+  elseif (is_page() || is_singular('daily_contribution')) :
+    return get_field('english_title');
+  elseif (is_search()) :
+    return 'Search Result';
+  elseif (is_404()) :
+    return '404 Not Found';
+  elseif (is_tax()) :
+    $term_obj = get_queried_object();
+    $english_title = get_field('english_title', $term_obj->taxonomy . '_' . $term_obj->term_id);
+    return $english_title;
+  endif;
+}
