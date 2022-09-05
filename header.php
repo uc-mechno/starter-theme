@@ -100,11 +100,5 @@
                 if (function_exists('bread_crumb')) {
                   bread_crumb();
                 }
-                if (function_exists('bcn_display')) {
-                  bcn_display();
-                }
-                if (function_exists('create_breadcrumb')) {
-                  create_breadcrumb();
-                }
                 ?>
               <?php endif; ?>
